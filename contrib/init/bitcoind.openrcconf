@@ -1,0 +1,33 @@
+# /etc/conf.d/octcoind: config file for /etc/init.d/octcoind
+
+# Config file location
+#OCTCOIND_CONFIGFILE="/etc/octcoin/octcoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $OCTCOIND_USER)
+#OCTCOIND_PIDDIR="/var/run/octcoind"
+
+# What filename to give the pidfile
+#OCTCOIND_PIDFILE="${OCTCOIND_PIDDIR}/octcoind.pid"
+
+# Where to write octcoind data (be mindful that the blockchain is large)
+#OCTCOIND_DATADIR="/var/lib/octcoind"
+
+# User and group to own octcoind process
+#OCTCOIND_USER="octcoin"
+#OCTCOIND_GROUP="octcoin"
+
+# Path to octcoind executable
+#OCTCOIND_BIN="/usr/bin/octcoind"
+
+# Nice value to run octcoind under
+#OCTCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#OCTCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for octcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+OCTCOIND_SIGTERM_TIMEOUT=600

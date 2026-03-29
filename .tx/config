@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[o:octcoin:p:octcoin:r:qt-translation-030x]
+file_filter = src/qt/locale/octcoin_<lang>.xlf
+source_file = src/qt/locale/octcoin_en.xlf
+source_lang = en

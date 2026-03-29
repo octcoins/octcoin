@@ -1,0 +1,11 @@
+Package: octcoin-core
+Version: 0.10.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: libqt5widgets5 | libqt5widgets5t64, libqt5gui5 | libqt5gui5t64, libqt5core5a | libqt5core5t64
+Maintainer: Ashata Nakaawa <ashata.nakaawa@gmail.com>
+Homepage: https://octcoins.github.io
+Description: Octcoin Core
+ Octcoin Core is the full node implementation of the Octcoin network.
+ It includes the daemon, GUI wallet, and command-line tools.

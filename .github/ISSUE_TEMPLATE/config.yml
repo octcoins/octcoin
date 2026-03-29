@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Octcoin Core Security Policy
+    url:  https://github.com/octcoins/octcoin/blob/master/SECURITY.md
+    about: View security policy
+  - name: Octcoin Core Developers
+    url: https://octcoincore.org
+    about: Octcoin Core homepage

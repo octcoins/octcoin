@@ -1,0 +1,93 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/octcoin/.octcoin" ]; then
+	OCTCOIND_DEFAULT_DATADIR="/var/lib/octcoin/.octcoin"
+else
+	OCTCOIND_DEFAULT_DATADIR="/var/lib/octcoind"
+fi
+
+OCTCOIND_CONFIGFILE=${OCTCOIND_CONFIGFILE:-/etc/octcoin/octcoin.conf}
+OCTCOIND_PIDDIR=${OCTCOIND_PIDDIR:-/var/run/octcoind}
+OCTCOIND_PIDFILE=${OCTCOIND_PIDFILE:-${OCTCOIND_PIDDIR}/octcoind.pid}
+OCTCOIND_DATADIR=${OCTCOIND_DATADIR:-${OCTCOIND_DEFAULT_DATADIR}}
+OCTCOIND_USER=${OCTCOIND_USER:-${OCTCOIN_USER:-octcoin}}
+OCTCOIND_GROUP=${OCTCOIND_GROUP:-octcoin}
+OCTCOIND_BIN=${OCTCOIND_BIN:-/usr/bin/octcoind}
+OCTCOIND_NICE=${OCTCOIND_NICE:-${NICELEVEL:-0}}
+OCTCOIND_OPTS="${OCTCOIND_OPTS:-${OCTCOIN_OPTS}}"
+
+name="Octcoin Core Daemon"
+description="Octcoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/octcoind"
+command_args="-pid=\"${OCTCOIND_PIDFILE}\" \
+		-conf=\"${OCTCOIND_CONFIGFILE}\" \
+		-datadir=\"${OCTCOIND_DATADIR}\" \
+		-daemon \
+		${OCTCOIND_OPTS}"
+
+required_files="${OCTCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${OCTCOIND_USER} \
+			-N ${OCTCOIND_NICE} -w 2000"
+pidfile="${OCTCOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${OCTCOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${OCTCOIND_USER}:${OCTCOIND_GROUP}" \
+	"${OCTCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${OCTCOIND_USER}:${OCTCOIND_GROUP}" \
+	"${OCTCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o "${OCTCOIND_USER}:${OCTCOIND_GROUP}" \
+	-m 0660 \
+	"${OCTCOIND_CONFIGFILE}"
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if grep -qs '^rpcuser=' "${OCTCOIND_CONFIGFILE}" && \
+		! grep -qs '^rpcpassword=' "${OCTCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run octcoind."
+		eerror "The setting must appear in ${OCTCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Octcoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}
