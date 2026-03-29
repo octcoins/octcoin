@@ -7,7 +7,7 @@ security updates: https://octcoins.github.io
 
 ## Reporting a Vulnerability
 
-To report security issues send an email to: ashata.nakaawa@gmail.com
+To report security issues send an email to: ashata.nakaawa@proton.me
 
 Please do not report security vulnerabilities through public GitHub issues.
 

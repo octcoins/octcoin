@@ -61,3 +61,16 @@ Changes should be tested by somebody other than the developer who wrote the
 code. This is especially important for large or high-risk changes. It is useful
 to add a test plan to the pull request description if testing the changes is
 not straightforward.
+
+Community
+---------
+
+For questions and contributions: ashata.nakaawa@proton.me
+
+- Discord: https://discord.gg/33G9XmeD4
+- Telegram (channel): https://t.me/OctcoinCommunity
+- Telegram (chat): https://t.me/OctcoinCommunityChat
+- GitLab: https://gitlab.com/octcoins-group/octcoin
+- Reddit: coming soon
+- Explorer: coming soon
+- X (Twitter): coming soon

@@ -68,3 +68,11 @@ Copyright
 ---------
 
 By contributing, you agree to license your work under the MIT license.
+Community
+---------
+
+For questions and contributions: ashata.nakaawa@proton.me
+
+- Discord: https://discord.gg/33G9XmeD4
+- Telegram (channel): https://t.me/OctcoinCommunity
+- Telegram (chat): https://t.me/OctcoinCommunityChat
