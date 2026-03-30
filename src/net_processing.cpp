@@ -3910,7 +3910,8 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
                 RelayAddress(pfrom.GetId(), addr, reachable);
             }
             // Do not store addresses outside our network
-            if (reachable) {
+            // Do not store addresses with wrong port (filter out Bitcoin nodes)
+            if (reachable && addr.GetPort() == 8555) {
                 vAddrOk.push_back(addr);
             }
         }
